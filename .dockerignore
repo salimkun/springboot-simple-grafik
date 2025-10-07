@@ -1,0 +1,14 @@
+target
+.git
+.idea
+.project
+.classpath
+.settings
+node_modules
+*.log
+exports
+*.iml
+bin
+build
+*.env
+
