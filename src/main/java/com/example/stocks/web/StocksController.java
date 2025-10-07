@@ -39,11 +39,11 @@ public class StocksController {
 
     @GetMapping("/list")
     public ResponseEntity<?> list(
-            @RequestParam(required = false) String tickers,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir
+            @RequestParam(name = "tickers", required = false) String tickers,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name = "sortBy", defaultValue = "date") String sortBy,
+            @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir
     ) {
         Set<String> tset = parseTickers(tickers);
         List<StockPrice> data = queryService.query(tset, startDate, endDate, sortBy, sortDir);
@@ -58,9 +58,9 @@ public class StocksController {
 
     @GetMapping("/chart")
     public ResponseEntity<?> chart(
-            @RequestParam(required = false) String tickers,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+            @RequestParam(name = "tickers", required = false) String tickers,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         Set<String> tset = parseTickers(tickers);
         Map<String, Object> chartData = chartService.buildChartData(tset, startDate, endDate);
@@ -74,11 +74,11 @@ public class StocksController {
 
     @GetMapping("/export/pdf")
     public ResponseEntity<byte[]> exportPdf(
-            @RequestParam(required = false) String tickers,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir
+            @RequestParam(name = "tickers", required = false) String tickers,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name = "sortBy", defaultValue = "date") String sortBy,
+            @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir
     ) throws IOException, DocumentException {
         Set<String> tset = parseTickers(tickers);
         List<StockPrice> data = queryService.query(tset, startDate, endDate, sortBy, sortDir);
