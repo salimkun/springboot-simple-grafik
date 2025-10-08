@@ -89,7 +89,15 @@ public class CsvStockLoader {
     private Map<String, Integer> mapHeaderIndexes(String[] headers) {
         Map<String, Integer> m = new HashMap<>();
         for (int i = 0; i < headers.length; i++) {
-            String h = headers[i].trim().toLowerCase(Locale.ROOT);
+            String raw = headers[i].trim().toLowerCase(Locale.ROOT);
+            // normalize known aliases to the expected canonical names
+            String h = switch (raw) {
+                case "portdate" -> "date";
+                case "portid" -> "ticker";
+                case "opening" -> "open";
+                case "closing" -> "close";
+                default -> raw;
+            };
             m.put(h, i);
         }
         return m;
